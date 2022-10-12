@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Subscription Data Viewer</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="source" type="String" label="Source" description="The source of the data to display." role="inputOnly" required="true" />
+            <property name="userId" type="String" label="User ID" description="The ID of the user to display data for." role="inputOnly" required="false" />
+            <property name="recordId" type="String" label="Record ID" description="The ID of the record to display data for." role="inputOnly" required="false" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
