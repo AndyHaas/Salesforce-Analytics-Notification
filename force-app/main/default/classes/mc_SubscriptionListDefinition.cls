@@ -24,24 +24,4 @@ global with sharing class mc_SubscriptionListDefinition {
     @AuraEnabled
     public List<mc_SubscriptionListDefinition_Thresholds> thresholds;
 
-
-    // Custom Definitions for use in DataTable
-    @AuraEnabled
-    public String reportName;
-    @AuraEnabled 
-    public String actionType;
-    @AuraEnabled
-    public Boolean excludeSnapshot;
-    @AuraEnabled
-    public Integer recipientCount;
-    @AuraEnabled
-    public Integer timeOfDay;
-    @AuraEnabled
-    public String daysOfWeek;
-    @AuraEnabled
-    public String daysOfMonth;
-    @AuraEnabled
-    public String weekInMonth;
-    @AuraEnabled
-    public String frequency;
 }

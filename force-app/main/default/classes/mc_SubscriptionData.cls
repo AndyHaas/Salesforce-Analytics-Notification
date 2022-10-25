@@ -56,38 +56,79 @@ public with sharing class mc_SubscriptionData {
             Results response = new Results();
             response.definition = parsedResponse;
 
-            // Iterate through the list of subscriptions and set report name
+            // Create a temp list for notificationDefinitions
+            List<mc_NotificationDefinition> notificationDefinitions = new List<mc_NotificationDefinition>();
+
+            // Iterate through the list of subscriptions and set report name and other details to another list
             for( mc_SubscriptionListDefinition currSubscription : response.definition ) {
+                System.Debug('currSubscription: ' + currSubscription.recordId);
+
+                // Set notificationDefinition to null
+                mc_NotificationDefinition notificationDefinition = new mc_NotificationDefinition();
+
                 // Set Report Name
-                currSubscription.reportName = [SELECT Name FROM Report WHERE Id = :currSubscription.recordId].Name;
+                notificationDefinition.reportName = [SELECT Name FROM Report WHERE Id = :currSubscription.recordId].Name;
 
                 // Set Action Type
-                currSubscription.actionType = currSubscription.thresholds[0].type;
+                notificationDefinition.actionType = currSubscription.thresholds[0].type;
 
                 // Set Exclude Snapshot
-                currSubscription.excludeSnapshot = currSubscription.thresholds[0].actions[0].configuration.excludeSnapshot;
+                notificationDefinition.excludeSnapshot = currSubscription.thresholds[0].actions[0].configuration.excludeSnapshot;
 
                 // Set Recipent Count
-                currSubscription.recipientCount = currSubscription.thresholds[0].actions[0].configuration.recipients.size();
+                notificationDefinition.recipientCount = currSubscription.thresholds[0].actions[0].configuration.recipients.size();
+
+                // Set Thresholds
+                notificationDefinition.thresholds = currSubscription.thresholds;
 
                 // Set Time of Day (if applicable) with elvis operator
-                currSubscription.timeOfDay = currSubscription.schedule.details.timeOfDay != null ? currSubscription.schedule.details.timeOfDay : null;
+                notificationDefinition.timeOfDay = currSubscription.schedule.details.timeOfDay != null ? currSubscription.schedule.details.timeOfDay : null;
 
                 // Set Days of Week (if applicable) with elvis operator
-                currSubscription.daysOfWeek = currSubscription.schedule.details.daysOfWeek != null ? currSubscription.schedule.details.daysOfWeek.toString() : null;
+                notificationDefinition.daysOfWeek = currSubscription.schedule.details.daysOfWeek != null ? currSubscription.schedule.details.daysOfWeek.toString() : null;
 
                 // Set Days of Month (if applicable) with elvis operator
-                currSubscription.daysOfMonth = currSubscription.schedule.details.daysOfMonth != null ? currSubscription.schedule.details.daysOfMonth.toString() : null;
+                notificationDefinition.daysOfMonth = currSubscription.schedule.details.daysOfMonth != null ? currSubscription.schedule.details.daysOfMonth.toString() : null;
                 
                 // Set Week In Month (if applicable) with elvis operator
-                currSubscription.weekInMonth = currSubscription.schedule.details.weekInMonth != null ? currSubscription.schedule.details.weekInMonth : null;
+                notificationDefinition.weekInMonth = currSubscription.schedule.details.weekInMonth != null ? currSubscription.schedule.details.weekInMonth : null;
 
                 // Set Frequency
-                currSubscription.frequency = currSubscription.schedule.frequency;
+                notificationDefinition.frequency = currSubscription.schedule.frequency;
+
+                // Set Active
+                notificationDefinition.active = currSubscription.active;
+
+                // Set Id
+                notificationDefinition.id = currSubscription.id;
+
+                // Set createdDate
+                notificationDefinition.createdDate = currSubscription.createdDate;
+
+                // Set lastModifiedDate
+                notificationDefinition.lastModifiedDate = currSubscription.lastModifiedDate;
+
+                // Set name
+                notificationDefinition.name = currSubscription.name;
+
+                // Set recordId
+                notificationDefinition.recordId = currSubscription.recordId;
+
+                // Set source
+                notificationDefinition.source = currSubscription.source;
+
+                // Push notification object to list
+                System.debug('notificationDefinition: ' + notificationDefinition);
+                notificationDefinitions.add(notificationDefinition);
+                System.debug('response.definitionDetails: ' + response.definitionDetails);
             }
+
+            // Add notificationDefinitions to response
+            response.definitionDetails = notificationDefinitions;
 
             // Stringify the response for use in DataTable
             response.definition_string = JSON.serialize(response.definition);
+            response.definitionDetails_string = JSON.serialize(response.definitionDetails);
 
             responseWrapper.add(response);
     
@@ -116,7 +157,13 @@ public with sharing class mc_SubscriptionData {
         public List<mc_SubscriptionListDefinition> definition;
 
         @InvocableVariable
+        public List<mc_NotificationDefinition> definitionDetails;
+
+        @InvocableVariable
         public string definition_string;
+
+        @InvocableVariable
+        public string definitionDetails_string;
     }
 
     public static mc_SubscriptionListDefinition parse(String json){

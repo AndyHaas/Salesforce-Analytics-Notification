@@ -20,17 +20,20 @@ public with sharing class mc_GetRecipients {
             mc_SubscriptionListDefinition subscriptionListDefinition = (mc_SubscriptionListDefinition)JSON.deserialize(definition_string, mc_SubscriptionListDefinition.class);
 
             System.debug('mc_GetRecipients: subscriptionListDefinition: ' + subscriptionListDefinition);
-
             
             Results response = new Results();
-            response.recipients_string = JSON.serialize(subscriptionListDefinition.thresholds[0].actions[0].configuration.recipients);
-            response.recipients = subscriptionListDefinition.thresholds[0].actions[0].configuration.recipients;
-            response.notificationId = subscriptionListDefinition.id;
-            response.definition = subscriptionListDefinition;
-            responseWrapper.add(response);
 
-            System.debug('recipients_string: ' + response.recipients_string);
-            System.debug('recipients: ' + response.recipients);
+            // Check if subscriptionListDefinition is not null and then if not then add to the response wrapper
+            if (subscriptionListDefinition != null) {
+                response.recipients_string = JSON.serialize(subscriptionListDefinition.thresholds[0].actions[0].configuration.recipients != null ? subscriptionListDefinition.thresholds[0].actions[0].configuration.recipients : null);
+                response.recipients = subscriptionListDefinition.thresholds[0].actions[0].configuration.recipients != null ? subscriptionListDefinition.thresholds[0].actions[0].configuration.recipients : null;
+                response.notificationId = subscriptionListDefinition.id != null ? subscriptionListDefinition.id : null;
+                response.definition = subscriptionListDefinition != null ? subscriptionListDefinition : null;
+                responseWrapper.add(response);
+                System.debug('recipients_string: ' + response.recipients_string);
+                System.debug('recipients: ' + response.recipients);
+            }
+
         }
 
         return responseWrapper;
