@@ -1,6 +1,6 @@
-public with sharing class mc_SubscriptionData {
+private with sharing class mc_SubscriptionData {
     @InvocableMethod(label='Get Subscription Data' description='Get Subscription Data')
-    public static List<Results> mc_GetSubscriptionDataList(List<Request> requestList) {
+    private static List<Results> mc_GetSubscriptionDataList(List<Request> requestList) {
         System.Debug('mc_SubscriptionDataList');
 
         // Set list of subscriptions
