@@ -1,5 +1,5 @@
 public with sharing class mc_DeleteRecipients {
-    @InvocableMethod
+    @InvocableMethod(label='Delete Selected Recipients' description='Get Subscription Data')
 public static List<Results> mc_DeleteRecipients(List<Request> requests) {
         // Set Response Wrapper
         List<Results> responseWrapper = new List<Results>();

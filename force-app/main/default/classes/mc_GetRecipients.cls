@@ -1,5 +1,5 @@
 public with sharing class mc_GetRecipients {
-    @InvocableMethod
+    @InvocableMethod(label='Parse Recipient Data' description='Parses the Recipient Data into usuable class for the flow')
     public static List<Results> mc_GetRecipients(List<Request> requests) {
         System.debug('mc_GetRecipients: ' + requests);
         // Set Response Wrapper
