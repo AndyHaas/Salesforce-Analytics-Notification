@@ -99,6 +99,14 @@
         "childXmlNames": []
       },
       {
+        "directoryName": "externalCredentials",
+        "inFolder": false,
+        "metaFile": false,
+        "suffix": "externalCredential",
+        "xmlName": "ExternalCredential",
+        "childXmlNames": []
+      },
+      {
         "directoryName": "namedCredentials",
         "inFolder": false,
         "metaFile": false,
@@ -810,6 +818,14 @@
         "childXmlNames": []
       },
       {
+        "directoryName": "eventRelays",
+        "inFolder": false,
+        "metaFile": false,
+        "suffix": "eventRelay",
+        "xmlName": "EventRelayConfig",
+        "childXmlNames": []
+      },
+      {
         "directoryName": "callCenters",
         "inFolder": false,
         "metaFile": false,
@@ -898,13 +914,6 @@
         "childXmlNames": []
       },
       {
-        "directoryName": "managedContentTypeBundles",
-        "inFolder": false,
-        "metaFile": false,
-        "xmlName": "ManagedContentTypeBundle",
-        "childXmlNames": []
-      },
-      {
         "directoryName": "managedContentTypes",
         "inFolder": false,
         "metaFile": false,
@@ -913,11 +922,29 @@
         "childXmlNames": []
       },
       {
+        "childXmlNames": [
+          "DigitalExperience"
+        ],
+        "directoryName": "digitalExperiences",
+        "inFolder": false,
+        "metaFile": true,
+        "suffix": "digitalExperience",
+        "xmlName": "DigitalExperienceBundle"
+      },
+      {
         "directoryName": "siteDotComSites",
         "inFolder": false,
         "metaFile": true,
         "suffix": "site",
         "xmlName": "SiteDotCom",
+        "childXmlNames": []
+      },
+      {
+        "directoryName": "digitalExperienceConfigs",
+        "inFolder": false,
+        "metaFile": false,
+        "suffix": "digitalExperienceConfig",
+        "xmlName": "DigitalExperienceConfig",
         "childXmlNames": []
       },
       {

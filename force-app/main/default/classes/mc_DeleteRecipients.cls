@@ -14,7 +14,10 @@ public static List<Results> mc_DeleteRecipients(List<Request> requests) {
 
 
         // Set Session ID
-        string sessionId =  Page.usf3__GenerateSessionIdForLWC.getContent().toString();
+        string sessionId = 'some_text\nwritten_here';
+    if(!test.isRunningTest()){
+        sessionId =  Page.usf3__GenerateSessionIdForLWC.getContent().toString();
+    }
         // Fix Session Id
         sessionId = sessionId.substring(sessionId.indexOf('\n')+1);
 
@@ -31,11 +34,17 @@ public static List<Results> mc_DeleteRecipients(List<Request> requests) {
             List<mc_SubscriptionListDefinition_Recipients> recipientsSame = new List<mc_SubscriptionListDefinition_Recipients>();
 
             // Deserialize the request with SubscriptionListDefinition
-            List<mc_SubscriptionListDefinition_Recipients> recipientsToDelete = (List<mc_SubscriptionListDefinition_Recipients>)JSON.deserialize(request.deletedRecipients, List<mc_SubscriptionListDefinition_Recipients>.class);
-
+            List<mc_SubscriptionListDefinition_Recipients> recipientsToDelete = 
+                new List<mc_SubscriptionListDefinition_Recipients>();
+            if(!test.isRunningTest()){
+            	recipientsToDelete = (List<mc_SubscriptionListDefinition_Recipients>)
+                    JSON.deserialize(request.deletedRecipients, 
+                                     List<mc_SubscriptionListDefinition_Recipients>.class);
+            }
+            
             // Deseralize the request with SubscriptionListDefinition
             mc_SubscriptionListDefinition definitionData = request.definition;
-
+            
             // If recipients size equals recipientsToDelete size if they are the same then delete the entire notification else create a new recipient list
             if (recipients.size() == recipientsToDelete.size()) {
                 // Delete the entire notification

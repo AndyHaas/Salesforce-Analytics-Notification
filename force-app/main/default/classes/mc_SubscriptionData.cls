@@ -21,12 +21,24 @@ public with sharing class mc_SubscriptionData {
             string domainURL = URL.getSalesforceBaseUrl().toExternalForm();
             System.debug('domainURL: ' + domainURL);
             string baseURL =  '/services/data/v55.0/analytics/notifications?source=' + currRequest.source;
+
+            // Go through the inputs and set the URL Parameters
+            if (currRequest.ownerId != null) {
+                baseURL = baseURL + '&ownerId=' + currRequest.ownerId;
+            }
+
+            if (currRequest.recordId != null) {
+                baseURL = baseURL + '&recordId=' + currRequest.recordId;
+            }
     
             // Set URL from domain and base url
             string url = domainURL + baseURL;
     
             // Set Session ID
-            string sessionId =  Page.usf3__GenerateSessionIdForLWC.getContent().toString();
+            string sessionId = 'session \n id';
+            if(!test.isRunningTest()){
+            	sessionId =  Page.usf3__GenerateSessionIdForLWC.getContent().toString();
+            }
             // Fix Session Id
             sessionId = sessionId.substring(sessionId.indexOf('\n')+1);
             
@@ -67,8 +79,9 @@ public with sharing class mc_SubscriptionData {
                 mc_NotificationDefinition notificationDefinition = new mc_NotificationDefinition();
 
                 // Set Report Name
-                notificationDefinition.reportName = [SELECT Name FROM Report WHERE Id = :currSubscription.recordId].Name;
-
+                if(!test.isRunningTest()){
+                	notificationDefinition.reportName = [SELECT Name FROM Report WHERE Id = :currSubscription.recordId].Name;
+                }
                 // Set Action Type
                 notificationDefinition.actionType = currSubscription.thresholds[0].type;
 
