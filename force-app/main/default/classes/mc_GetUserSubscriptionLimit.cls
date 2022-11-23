@@ -1,5 +1,5 @@
 public with sharing class mc_GetUserSubscriptionLimit {
-    @InvocableMethod(label='Get User Subscription Limit' description='Get the subscription limit for a user')
+    @InvocableMethod(label='Get User Subscription Limit' description='Get the subscription limit for a user' category='Analytic Subscription')
     public static List<Results> mc_GetUserSubscriptionLimitList(List<Request> requestList) {
         // Set list of results
         List<mc_SubscriptionLimitDefinition> userLimit = new List<mc_SubscriptionLimitDefinition>();

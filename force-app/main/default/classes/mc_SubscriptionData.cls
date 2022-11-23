@@ -1,5 +1,5 @@
 public with sharing class mc_SubscriptionData {
-    @InvocableMethod(label='Get Subscription Data' description='Get Subscription Data')
+    @InvocableMethod(label='Get Subscription Data' description='Get Subscription Data' category='Analytic Subscription')
     public static List<Results> mc_GetSubscriptionDataList(List<Request> requestList) {
         System.Debug('mc_SubscriptionDataList');
 
